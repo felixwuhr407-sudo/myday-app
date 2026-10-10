@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="Dein persönlicher Organizer für Aufgaben, Schule, Termine und Ideen.">
+<title>MyDay | Persönlicher Organizer</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="#" data-page="dashboard"><span class="brand-logo">M</span><span><b>MYDAY</b><small>PERSONAL CONTROL</small></span></a>
+  <p class="nav-label">WORKSPACE</p>
+  <nav>
+    <button class="nav active" data-page="dashboard">▦ <span>Dashboard</span></button>
+    <button class="nav" data-page="tasks">✓ <span>Aufgaben</span><em id="nav-count">0</em></button>
+    <button class="nav" data-page="school">⌂ <span>Schule</span></button>
+    <button class="nav" data-page="calendar">📅 <span>Termine</span></button>
+    <button class="nav" data-page="ideas">✳ <span>Ideen & Notizen</span></button>
+    <button class="nav" data-page="settings">⚙ <span>Einstellungen</span></button>
+  </nav>
+  <div class="side-bottom"><div class="focus"><i></i><span><b>Dein Fokus</b><small>Kleine Schritte. Echter Fortschritt.</small></span></div><small>LOKAL · PRIVAT · DEIN WORKSPACE</small></div>
+</aside>
+<main>
+<header class="topbar">
+  <button class="icon mobile-menu" id="menu-toggle" aria-label="Menü öffnen">☰</button>
+  <div class="crumb">Workspace <span>/</span> <b id="crumb-title">Dashboard</b></div>
+  <div class="top-actions"><label class="search"><span>⌕</span><input id="search-all" placeholder="Aufgaben suchen…" aria-label="Aufgaben suchen"></label><button class="icon" id="quick-add" aria-label="Neue Aufgabe">＋</button><div class="avatar">DU</div></div>
+</header>
+
+<section class="page shown" id="page-dashboard">
+  <div class="hero"><div class="hero-copy"><div class="eyebrow"><i></i> DEIN PERSÖNLICHER WORKSPACE</div><h1 id="greeting">Hallo, schön dass du da bist.</h1><p>Ein klarer Kopf beginnt mit einem guten Überblick.</p><div id="today" class="today"></div></div><div class="orb" aria-hidden="true"><div class="orb-ring"></div><div class="orb-logo">M</div><i class="orb-dot d1"></i><i class="orb-dot d2"></i></div></div>
+  <div class="stats">
+    <article class="stat"><div class="stat-head">OFFENE AUFGABEN <span class="stat-icon">✓</span></div><strong id="stat-open">0</strong><div class="stat-foot"><span class="bar"><i id="open-bar"></i></span><span id="open-note">Alles im Griff</span></div></article>
+    <article class="stat"><div class="stat-head">SCHULE <span class="stat-icon cyan">⌂</span></div><strong id="stat-school">0</strong><div class="stat-foot">Offene Schulaufgaben</div></article>
+    <article class="stat"><div class="stat-head">TERMINE <span class="stat-icon purple">📅</span></div><strong id="stat-events">0</strong><div class="stat-foot">In den nächsten 7 Tagen</div></article>
+    <article class="stat"><div class="stat-head">ERLEDIGT <span class="stat-icon green">↗</span></div><strong id="stat-done">0%</strong><div class="stat-foot"><span class="bar greenbar"><i id="done-bar"></i></span>Aufgabenfortschritt</div></article>
+  </div>
+  <div class="dashboard-grid">
+    <article class="panel"><div class="panel-title"><div><small>JETZT ANPACKEN</small><h2>Deine Aufgaben</h2></div><button class="link" data-page="tasks">Alle ansehen ↗</button></div><div id="dash-tasks" class="stack"></div><button class="add-row" id="add-task-dash">＋ Neue Aufgabe hinzufügen</button></article>
+    <article class="panel"><div class="panel-title"><div><small>IM BLICK BEHALTEN</small><h2>Nächste Termine</h2></div><button class="link" data-page="calendar">Kalender ↗</button></div><div id="dash-events" class="stack"></div><button class="add-row" id="add-event-dash">＋ Termin hinzufügen</button></article>
+    <article class="panel"><div class="panel-title"><div><small>DEIN FORTSCHRITT</small><h2>Du kommst voran</h2></div><span class="stat-icon green">↗</span></div><div class="ring" id="ring"><div><strong id="progress">0%</strong><small>ERLEDIGT</small></div></div><p id="progress-note" class="muted center">Füge deine erste Aufgabe hinzu und leg los.</p></article>
+    <article class="panel"><div class="panel-title"><div><small>GEDANKEN FESTHALTEN</small><h2>Letzte Ideen</h2></div><button class="link" data-page="ideas">Alle ansehen ↗</button></div><div id="dash-ideas" class="stack"></div><button class="add-row" id="add-idea-dash">＋ Idee festhalten</button></article>
+  </div>
+</section>
+
+<section class="page" id="page-tasks">
+  <div class="page-heading"><div><small>PLANEN & ERLEDIGEN</small><h1>Aufgaben</h1><p>Alles im Blick – Schritt für Schritt.</p></div><button class="primary" id="new-task">＋ Neue Aufgabe</button></div>
+  <div class="toolbar"><div class="filters"><button class="filter active" data-filter="all">Alle</button><button class="filter" data-filter="open">Offen</button><button class="filter" data-filter="done">Erledigt</button></div><select id="sort-tasks" aria-label="Sortierung"><option value="date">Nach Fälligkeit</option><option value="priority">Nach Priorität</option><option value="newest">Neu zuerst</option></select></div>
+  <div id="task-list" class="stack"></div>
+</section>
+
+<section class="page" id="page-school">
+  <div class="page-heading"><div><small>LERNEN MIT ÜBERBLICK</small><h1>Schule</h1><p>Hausaufgaben, Abgaben und Prüfungen an einem Ort.</p></div><button class="primary" id="new-school">＋ Schulaufgabe</button></div>
+  <div id="school-stats" class="stats school-stats"></div><article class="panel"><div class="panel-title"><div><h2>Deine Schulaufgaben</h2><p class="muted">Mit Fach, Fälligkeit und Priorität.</p></div></div><div id="school-list" class="stack"></div></article>
+</section>
+
+<section class="page" id="page-calendar">
+  <div class="page-heading"><div><small>ZEIT IM GRIFF</small><h1>Termine</h1><p>Behalte wichtige Tage und Ereignisse im Blick.</p></div><button class="primary" id="new-event">＋ Neuer Termin</button></div>
+  <div class="calendar-layout"><article class="panel"><div class="cal-head"><button class="icon" id="prev-month" aria-label="Vorheriger Monat">‹</button><h2 id="month-title"></h2><button class="icon" id="next-month" aria-label="Nächster Monat">›</button></div><div id="calendar-grid" class="calendar-grid"></div><p class="muted">Wähle einen Tag, um seine Termine zu sehen.</p></article><article class="panel"><div class="panel-title"><div><small>GEWÄHLTER TAG</small><h2 id="selected-title">Termine</h2></div></div><div id="selected-events" class="stack"></div><button class="add-row" id="add-selected-event">＋ Termin für diesen Tag</button></article></div>
+  <article class="panel upcoming"><div class="panel-title"><div><small>ALS NÄCHSTES</small><h2>Alle kommenden Termine</h2></div></div><div id="all-events" class="stack"></div></article>
+</section>
+
+<section class="page" id="page-ideas">
+  <div class="page-heading"><div><small>NICHT VERGESSEN</small><h1>Ideen & Notizen</h1><p>Halte Gedanken fest, bevor sie verloren gehen.</p></div><button class="primary" id="new-idea">＋ Neue Idee</button></div>
+  <label class="search ideas-search">⌕ <input id="search-ideas" placeholder="Ideen durchsuchen…"></label><div id="ideas-grid" class="ideas-grid"></div>
+</section>
+
+<section class="page" id="page-settings">
+  <div class="page-heading"><div><small>DEIN WORKSPACE</small><h1>Einstellungen</h1><p>Deine Daten und dein persönlicher Bereich.</p></div></div>
+  <div class="settings-grid">
+    <article class="panel setting"><span class="setting-icon">◈</span><h2>Deine Daten</h2><p>Einträge werden lokal in diesem Browser gespeichert. Sie werden nicht automatisch auf andere Geräte übertragen.</p><div class="setting-buttons"><button class="secondary" id="export-data">Daten exportieren (JSON)</button><label class="secondary file-button">Daten importieren<input id="import-data" type="file" accept="application/json"></label></div></article>
+    <article class="panel setting"><span class="setting-icon red">⌫</span><h2>Workspace zurücksetzen</h2><p>Alle Aufgaben, Termine und Ideen löschen. Exportiere vorher deine Daten, wenn du sie behalten möchtest.</p><button class="danger" id="reset-data">Alle lokalen Daten löschen</button></article>
+    <article class="panel setting"><span class="setting-icon">ⓘ</span><h2>Über MyDay</h2><p>Ein persönlicher Organizer mit HTML, CSS und JavaScript. Für Grundfunktionen ist kein Konto nötig.</p><span class="version">VERSION 1.0 · PERSÖNLICHER WORKSPACE</span></article>
+  </div>
+</section>
+<footer><span>● DEIN WORKSPACE · DEINE REGELN</span><span>Mit Fokus gebaut <b>◆</b></span></footer>
+</main>
+</div>
+
+<div class="backdrop" id="backdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><small id="modal-kicker">NEU ERSTELLEN</small><h2 id="modal-title">Neue Aufgabe</h2></div><button class="icon" id="close-modal" aria-label="Dialog schließen">×</button></div><form id="entry-form"><div id="form-fields"></div><p id="form-error" class="error-message" role="alert"></p><div class="modal-actions"><button type="button" class="secondary" id="cancel-modal">Abbrechen</button><button type="submit" class="primary">Speichern</button></div></form></section></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+</body>
+</html>
